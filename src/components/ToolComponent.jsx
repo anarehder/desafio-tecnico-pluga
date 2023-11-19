@@ -1,11 +1,20 @@
 import styled from 'styled-components';
+import { useToolContext } from '../contexts/ToolContext';
 
 export default function ToolComponent(tool) {
+    const { addRecentTool } = useToolContext();
+
+    const handleClick = () => {
+        // Adiciona a ferramenta recente ao contexto
+        addRecentTool(tool);
+    };
+
+
     return (
-        <a href={tool.tool.link}>
+        <a /* href={tool.tool.link} */ onClick={handleClick}>
             <ToolBlock>
                 <div>
-                    <img src={tool.tool.icon} alt={tool.tool.name}/>
+                    <img src={tool.tool.icon} alt={tool.tool.name} />
                 </div>
                 {tool.tool.name}
             </ToolBlock>

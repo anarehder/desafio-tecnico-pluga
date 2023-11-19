@@ -1,17 +1,20 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import SearchTool from "./pages/SearchToolsPage";
+import { ToolContextProvider } from "./contexts/ToolContext";
 
 function App() {
 
   return (
-    <AppContainer>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<SearchTool />} />
-        </Routes>
-      </BrowserRouter >
-    </AppContainer >
+    <ToolContextProvider>
+      <AppContainer>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SearchTool />} />
+          </Routes>
+        </BrowserRouter >
+      </AppContainer >
+    </ToolContextProvider>
   )
 }
 
