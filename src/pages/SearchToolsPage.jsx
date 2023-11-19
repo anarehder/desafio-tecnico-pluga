@@ -20,6 +20,7 @@ function SearchTool() {
         const currentTools = toolsData.slice(startIndex, endIndex);
         setToolsByPage(currentTools);
     }
+
     useEffect(() => {
         const getData = async () => {
             try {
@@ -35,8 +36,6 @@ function SearchTool() {
         }
         getData();
     }, []);
-
-    console.log(toolsByPage);
 
     const nextPage = () => {
         if (currentPage < totalPages) {
@@ -72,7 +71,7 @@ function SearchTool() {
                 <Tools>
                     {
                         toolsByPage.map((tool) => (
-                            <ToolComponent key={tool.app_id} name={tool.name} icon={tool.icon} link={tool.link} color={tool.color} />
+                            <ToolComponent key={tool.app_id} tool={tool} />
                         ))
                     }
                 </Tools>

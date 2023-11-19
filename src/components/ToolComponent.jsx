@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
-export default function ToolComponent({ name, icon, link }) {
-
+export default function ToolComponent(tool) {
     return (
-        <a href={link}>
+        <a href={tool.tool.link}>
             <ToolBlock>
                 <div>
-                    <img src={icon} alt={name}/>
+                    <img src={tool.tool.icon} alt={tool.tool.name}/>
                 </div>
-                {name}
+                {tool.tool.name}
             </ToolBlock>
         </a>
     );
