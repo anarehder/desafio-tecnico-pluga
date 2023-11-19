@@ -1,17 +1,16 @@
 import styled from 'styled-components';
-import { useToolContext } from '../contexts/ToolContext';
+
+import { useState } from 'react';
 
 export default function ToolComponent(tool) {
-    const { addRecentTool } = useToolContext();
+    const [modalOpen, setModalOpen] = useState(false);
 
-    const handleClick = () => {
-        // Adiciona a ferramenta recente ao contexto
-        addRecentTool(tool);
-    };
-
-
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    }
+    console.log(modalOpen);
     return (
-        <a /* href={tool.tool.link} */ onClick={handleClick}>
+        <a onClick={handleOpenModal}>
             <ToolBlock>
                 <div>
                     <img src={tool.tool.icon} alt={tool.tool.name} />
