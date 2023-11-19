@@ -132,7 +132,7 @@ const ContainerSearchTools = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 20px;
 `
 
 const Header = styled.div`
@@ -163,13 +163,13 @@ const SearchBarForm = styled.form`
 `
 
 const Tools = styled.div`
-    min-height: 680px;
-    padding: 15px 50px;
+    min-height: 650px;
+    padding: 10px 90px;
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: center;
-    gap: 0 30px;
+    gap: 0 35px;
 `
 const Buttons = styled.div`
     display: flex;

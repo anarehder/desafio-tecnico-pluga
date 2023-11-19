@@ -15,15 +15,15 @@ export default function ToolComponent(tool) {
                 <div>
                     <img src={tool.tool.icon} alt={tool.tool.name} />
                 </div>
-                {tool.tool.name}
+                <h2> {tool.tool.name} </h2>
             </ToolBlock>
         </a>
     );
 }
 
 const ToolBlock = styled.div`
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,5 +33,9 @@ const ToolBlock = styled.div`
     gap: 30px;
     img {
         width: 70px;
+    }
+    h2 {
+        font-size: 20px;
+        text-align: center;
     }
 `
