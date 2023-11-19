@@ -20,5 +20,7 @@ export default App
 const AppContainer = styled.main`
   display: flex;
   justify-content: center;
-  width: calc(100vw - 50px);
+  width: calc(100vw - 15px);
+  background-color: firebrick;
+  padding: 10px;
 `
