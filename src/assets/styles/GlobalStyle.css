@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
 
 body {
-  font-family: 'Merriweather', serif;
+  font-family: 'Montserrat', sans-serif;
   padding: 60px 0;
   display: flex;
   justify-content: center;
@@ -20,7 +21,7 @@ a:hover {
 
 h1 {
   font-weight: 500;
-  font-size: 30px;
+  font-size: 25px;
   padding: 5px 0;
 }
 
@@ -46,19 +47,21 @@ input:focus{
 }
 
 button {
-  border-radius: 5px;
+  border-radius: 50px;
   border: 0.5px solid gray;
   margin: 5px;
-  font-size: 25px;
-  padding: 0.2em 0.8em;
+  padding: 10px;
+  font-size: 20px;
   font-weight: 500;
-  background-color: #f9f9f9;
   cursor: pointer;
+  background-color: white;
+  color: #27AAE1;
   transition: border-color 0.25s;
 }
 button:hover {
-  background-color: #3231a7;
+  background-color: #27AAE1;
   color: white;
+  cursor: pointer;
 }
 button:focus,
 button:focus-visible {
