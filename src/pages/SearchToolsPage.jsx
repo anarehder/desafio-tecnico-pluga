@@ -13,11 +13,14 @@ function SearchTool() {
     const [toolsByPage, setToolsByPage] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
     const itemsPerPage = 12;
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredTools, setFilteredTools] = useState([]);
+    console.log(searchTerm);
 
-    function setPage(page) {
+    function setPage(page, array) {
         const startIndex = (page - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        const currentTools = toolsData.slice(startIndex, endIndex);
+        const currentTools = array.slice(startIndex, endIndex);
         setToolsByPage(currentTools);
     }
 
@@ -39,17 +42,38 @@ function SearchTool() {
 
     const nextPage = () => {
         if (currentPage < totalPages) {
-          setCurrentPage(currentPage + 1);
-          setPage(currentPage + 1);
+            setCurrentPage(currentPage + 1);
+            if (searchTerm.length > 0){
+                setPage(currentPage + 1, filteredTools);
+            } else {
+                setPage(currentPage + 1, toolsData);
+            }
         }
-      };
-    
-      const prevPage = () => {
+    };
+
+    const prevPage = () => {
         if (currentPage > 1) {
-          setCurrentPage(currentPage - 1);
-          setPage(currentPage - 1);
+            setCurrentPage(currentPage - 1);
+            if (searchTerm.length > 0){
+                setPage(currentPage - 1, filteredTools);
+            } else {
+                setPage(currentPage - 1, toolsData);
+            }
         }
-      };
+    };
+
+    const handleSearch = (event) => {
+        const term = event.target.value;
+        console.log(term);
+        const filtered = toolsData.filter(tool =>
+            tool.name.toLowerCase().includes(term.toLowerCase())
+        );
+        console.log(filtered);
+        setTotalPages(Math.ceil(filtered.length / itemsPerPage));
+        setPage(1, filtered);
+        setSearchTerm(term);
+        setFilteredTools(filtered);
+    };
 
     return (
         <ContainerSearchTools>
@@ -60,7 +84,12 @@ function SearchTool() {
             <SearchBarDiv style={{ color: 'gray' }}>
                 <FaSearch size={24} />
                 <SearchBarForm>
-                    BUSCAR FERRAMENTA
+                    <input
+                        type="text"
+                        id="search"
+                        value={searchTerm}
+                        onChange={handleSearch}
+                    />
                 </SearchBarForm>
             </SearchBarDiv>
 
@@ -68,13 +97,19 @@ function SearchTool() {
                 <h1>
                     <img src={loadingGif} alt={"gif carregando"} />
                 </h1> :
-                <Tools>
-                    {
-                        toolsByPage.map((tool) => (
-                            <ToolComponent key={tool.app_id} tool={tool} />
-                        ))
-                    }
-                </Tools>
+                filteredTools.length === 0 && searchTerm.length === 0 ?
+                    <Tools>
+                        {toolsByPage.map((tool) => (
+                            <ToolComponent key={tool.app_id} tool={tool} />))
+                        }
+                    </Tools> :
+                    filteredTools.length === 0 && searchTerm.length > 0 ?
+                        <h1> Sem resultados para esta busca </h1> :
+                        <Tools>
+                            {toolsByPage.map((tool) => (
+                                <ToolComponent key={tool.app_id} tool={tool} />))
+                            }
+                        </Tools>
             }
             <Buttons>
                 <PageButton onClick={prevPage} disabled={currentPage === 1}>
@@ -84,8 +119,7 @@ function SearchTool() {
                     PRÓXIMA PÁGINA
                 </PageButton>
             </Buttons>
-
-        </ContainerSearchTools>
+        </ContainerSearchTools >
     )
 }
 
@@ -93,7 +127,7 @@ export default SearchTool;
 
 const ContainerSearchTools = styled.div`
   width: 100%;
-  padding: 15px 350px;
+  padding: 0 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,7 +145,7 @@ const Header = styled.div`
 `
 
 const SearchBarDiv = styled.div`
-    height: 50px;
+    height: 40px;
     width: calc(100% - 20%);
     padding: 10px 35px;
     display: flex;
@@ -129,12 +163,13 @@ const SearchBarForm = styled.form`
 `
 
 const Tools = styled.div`
+    min-height: 680px;
     padding: 15px 50px;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    gap: 30px;
+    gap: 0 30px;
 `
 const Buttons = styled.div`
     display: flex;

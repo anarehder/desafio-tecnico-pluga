@@ -4,7 +4,6 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  padding: 60px 0;
   display: flex;
   justify-content: center;
   min-width: 320px;
@@ -35,16 +34,13 @@ h2 {
 input{
   font-weight: 500;
   font-size: 25px;
-  padding: 0.2em 0.8em;
-  border-radius: 5px;
-  border: 0.5px solid gray;
-  width: 350px;
+  width: 100%;
+  border: none; /* Remove a borda */
+  outline: none; /* Remove o contorno ao focar */
+  padding: 8px;
   @media (max-width: 800px) {
     text-align: center; 
 }
-}
-input:focus{
-  border: 1px solid #3231a7;
 }
 
 button {

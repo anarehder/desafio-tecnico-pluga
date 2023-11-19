@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { useState } from 'react';
 
 export default function ToolComponent(tool) {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [setModalOpen] = useState(false);
 
     const handleOpenModal = () => {
         setModalOpen(true);
     }
-    console.log(modalOpen);
+
     return (
         <a onClick={handleOpenModal}>
             <ToolBlock>
