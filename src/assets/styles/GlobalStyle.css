@@ -64,9 +64,8 @@ button:hover {
   color: white;
   cursor: pointer;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:disabled {
+  background-color: gray;
+  color: white;
 }
-
 

@@ -20,7 +20,6 @@ function SearchTool() {
         const currentTools = toolsData.slice(startIndex, endIndex);
         setToolsByPage(currentTools);
     }
-
     useEffect(() => {
         const getData = async () => {
             try {

@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
-export default function ToolComponent({ name, icon, link, color }) {
+export default function ToolComponent({ name, icon, link }) {
 
     return (
         <a href={link}>
             <ToolBlock>
-                <div style={{ color: {color} }}>
-                    <img src={icon} alt={name} />
+                <div>
+                    <img src={icon} alt={name}/>
                 </div>
-
                 {name}
             </ToolBlock>
         </a>
@@ -22,7 +21,7 @@ const ToolBlock = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: gray;
+    background-color: #EFEFEF;
     border-radius: 15px;
     gap: 30px;
     img {
