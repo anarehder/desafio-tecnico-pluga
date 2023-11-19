@@ -1,8 +1,29 @@
 import styled from 'styled-components';
 import logoPluga from '../assets/images/pluga.png';
+import loadingGif from '../assets/images/spinner.gif';
 import { FaSearch } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { getPlugaData } from '../services/plugaAPI';
 
 function SearchTool() {
+
+    const [toolsData, setToolsData] = useState([]);
+    const [carregando, setCarregando] = useState(false);
+
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const toolsData = await getPlugaData();
+                setToolsData(toolsData);
+                setCarregando(false);
+            } catch (error) {
+                setCarregando(false);
+                alert("Não foi possível obter o dados!");
+            }
+        }
+        getData();
+    }, []);
+    console.log(toolsData);
     return (
         <ContainerSearchTools>
             <Header>
@@ -15,44 +36,50 @@ function SearchTool() {
                     BUSCAR FERRAMENTA
                 </SearchBarForm>
             </SearchBarDiv>
-            <Tools>
-                <ToolBlock>
-                    Ferramenta 1
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 2
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 3
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 4
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 5
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 6
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 7
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 8
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 9
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 10
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 11
-                </ToolBlock>
-                <ToolBlock>
-                    Ferramenta 12
-                </ToolBlock>
-            </Tools>
+
+            {carregando === true ?
+                <h1>
+                    <img src={loadingGif} alt={"gif carregando"} />
+                </h1> :
+                <Tools>
+                    <ToolBlock>
+                        Ferramenta 1
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 2
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 3
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 4
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 5
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 6
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 7
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 8
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 9
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 10
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 11
+                    </ToolBlock>
+                    <ToolBlock>
+                        Ferramenta 12
+                    </ToolBlock>
+                </Tools>
+            }
             <PageButton>
                 PRÓXIMA PÁGINA
             </PageButton>
