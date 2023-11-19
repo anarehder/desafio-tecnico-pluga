@@ -4,17 +4,30 @@ import loadingGif from '../assets/images/spinner.gif';
 import { FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { getPlugaData } from '../services/plugaAPI';
+import ToolComponent from '../components/ToolComponent';
 
 function SearchTool() {
-
     const [toolsData, setToolsData] = useState([]);
     const [carregando, setCarregando] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [toolsByPage, setToolsByPage] = useState([]);
+    const [totalPages, setTotalPages] = useState(1);
+    const itemsPerPage = 12;
+
+    function setPage(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentTools = toolsData.slice(startIndex, endIndex);
+        setToolsByPage(currentTools);
+    }
 
     useEffect(() => {
         const getData = async () => {
             try {
-                const toolsData = await getPlugaData();
-                setToolsData(toolsData);
+                const toolsDataInfo = await getPlugaData();
+                setToolsData(toolsDataInfo);
+                setToolsByPage(toolsDataInfo.slice(0, 12));
+                setTotalPages(Math.ceil(toolsDataInfo.length / itemsPerPage));
                 setCarregando(false);
             } catch (error) {
                 setCarregando(false);
@@ -23,7 +36,23 @@ function SearchTool() {
         }
         getData();
     }, []);
-    console.log(toolsData);
+
+    console.log(toolsByPage);
+
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+          setCurrentPage(currentPage + 1);
+          setPage(currentPage + 1);
+        }
+      };
+    
+      const prevPage = () => {
+        if (currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+          setPage(currentPage - 1);
+        }
+      };
+
     return (
         <ContainerSearchTools>
             <Header>
@@ -42,47 +71,22 @@ function SearchTool() {
                     <img src={loadingGif} alt={"gif carregando"} />
                 </h1> :
                 <Tools>
-                    <ToolBlock>
-                        Ferramenta 1
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 2
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 3
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 4
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 5
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 6
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 7
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 8
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 9
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 10
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 11
-                    </ToolBlock>
-                    <ToolBlock>
-                        Ferramenta 12
-                    </ToolBlock>
+                    {
+                        toolsByPage.map((tool) => (
+                            <ToolComponent key={tool.app_id} name={tool.name} icon={tool.icon} link={tool.link} color={tool.color} />
+                        ))
+                    }
                 </Tools>
             }
-            <PageButton>
-                PRÓXIMA PÁGINA
-            </PageButton>
+            <Buttons>
+                <PageButton onClick={prevPage} disabled={currentPage === 1}>
+                    PÁGINA ANTERIOR
+                </PageButton>
+                <PageButton onClick={nextPage} disabled={currentPage === totalPages}>
+                    PRÓXIMA PÁGINA
+                </PageButton>
+            </Buttons>
+
         </ContainerSearchTools>
     )
 }
@@ -134,15 +138,8 @@ const Tools = styled.div`
     justify-content: center;
     gap: 30px;
 `
-
-const ToolBlock = styled.div`
-    width: 200px;
-    height: 200px;
+const Buttons = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: gray;
-    border-radius: 15px;
 `
 
 const PageButton = styled.button`
