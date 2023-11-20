@@ -13,7 +13,7 @@ const ToolModal = (props) => {
 
     return (
         <ModalContainer>
-            <Modal isOpen={props.tool && true }>
+            <Modal isOpen={props.tool && true}>
                 <ToolInfo>
                     <img src={props.tool.icon} alt={props.tool.name} />
                     <div>
@@ -77,11 +77,11 @@ const ToolInfo = styled.div`
         h1 {
             width: 250px;
             background-color: #EFEFEF;;
-            color: #757575;
+            color: #757575 !important;
             padding: 15px;
         }
         a{
-            background-color:#DFDFDF;
+            background-color:#A7A7A7;
             border-radius: 35px;
             font-weight: 700;
             padding: 15px;
@@ -97,9 +97,12 @@ const LastTools = styled.div`
     justify-content: center;
     align-items: center;
     gap: 70px;
+    h1 {
+        color: #757575 !important;
+    }
 
 `
-const LastToolsList = styled.ul`
+const LastToolsList = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,7 +111,7 @@ const LastToolsList = styled.ul`
         text-align: center;
     }
     img {
-        width: 170px;
+        width: 120px;
         background-color: #EFEFEF;
         border-radius: 100px;
         padding: 15px;
@@ -116,10 +119,10 @@ const LastToolsList = styled.ul`
     }
     h1 {
             width: 250px;
-            background-color: #EFEFEF;;
-            color: #757575;
+            background-color: #EFEFEF;
+            color: #757575 !important;
             padding: 15px;
-        }
+    }
 `
 
 const ModalButton = styled.button`

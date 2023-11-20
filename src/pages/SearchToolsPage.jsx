@@ -7,6 +7,7 @@ import ToolComponent from '../components/ToolComponent';
 import ToolModal from '../modal/ToolModal';
 import { useToolContext } from '../contexts/ToolContext';
 import HeaderComponent from '../components/HeaderComponent';
+import PageButtonsComponent from '../components/PageButtonsComponent';
 
 function SearchTool() {
     const [toolsData, setToolsData] = useState([]);
@@ -19,22 +20,6 @@ function SearchTool() {
     const [filteredTools, setFilteredTools] = useState([]);
     const [selectedTool, setSelectedTool] = useState(null);
     const { addRecentTool } = useToolContext();
-
-    function openModal(tool){
-        setSelectedTool(tool);
-    }
-
-    function closeModal(tool) {
-        addRecentTool(tool);
-        setSelectedTool(null);
-    }
-
-    function setPage(page, array) {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const currentTools = array.slice(startIndex, endIndex);
-        setToolsByPage(currentTools);
-    }
 
     useEffect(() => {
         const getData = async () => {
@@ -52,37 +37,36 @@ function SearchTool() {
         getData();
     }, []);
 
-    const nextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-            if (searchTerm.length > 0) {
-                setPage(currentPage + 1, filteredTools);
-            } else {
-                setPage(currentPage + 1, toolsData);
-            }
-        }
-    };
+    function openModal(tool) {
+        setSelectedTool(tool);
+    }
 
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-            if (searchTerm.length > 0) {
-                setPage(currentPage - 1, filteredTools);
-            } else {
-                setPage(currentPage - 1, toolsData);
-            }
+    function closeModal(tool) {
+        addRecentTool(tool);
+        setSelectedTool(null);
+    }
+
+    function setPage(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setCurrentPage(page);
+        if (searchTerm.length > 0) {
+            const currentTools = filteredTools.slice(startIndex, endIndex);
+            setToolsByPage(currentTools);
+        } else {
+            const currentTools = toolsData.slice(startIndex, endIndex);
+            setToolsByPage(currentTools);
         }
-    };
+    }
 
     const handleSearch = (event) => {
         const term = event.target.value;
-        console.log(term);
         const filtered = toolsData.filter(tool =>
             tool.name.toLowerCase().includes(term.toLowerCase())
         );
-        console.log(filtered);
         setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-        setPage(1, filtered);
+        const currentTools = filtered.slice(0, 12);
+        setToolsByPage(currentTools);
         setSearchTerm(term);
         setFilteredTools(filtered);
     };
@@ -101,18 +85,17 @@ function SearchTool() {
                     />
                 </SearchBarForm>
             </SearchBarDiv>
-
             {carregando === true ?
                 <h1>
                     <img src={loadingGif} alt={"gif carregando"} />
                 </h1> :
-                filteredTools.length === 0 && searchTerm.length === 0 ?
+                searchTerm.length === 0 && filteredTools.length === 0 ?
                     <Tools>
                         {toolsByPage.map((tool) => (
                             <ToolComponent key={tool.app_id} tool={tool} openModal={openModal} />))
                         }
                     </Tools> :
-                    filteredTools.length === 0 && searchTerm.length > 0 ?
+                    searchTerm.length > 0 && filteredTools.length === 0 ?
                         <h1> Sem resultados para esta busca </h1> :
                         <Tools>
                             {toolsByPage.map((tool) => (
@@ -121,22 +104,12 @@ function SearchTool() {
                         </Tools>
             }
             {selectedTool && (
-                <ToolModal tool={selectedTool} closeModal={closeModal}/>
+                <ToolModal tool={selectedTool} closeModal={closeModal} />
             )}
-            <Buttons>
-                <PageButton onClick={prevPage} disabled={currentPage === 1}>
-                    PÁGINA ANTERIOR
-                </PageButton>
-                <PageButton onClick={nextPage} disabled={currentPage === totalPages}>
-                    PRÓXIMA PÁGINA
-                </PageButton>
-            </Buttons>
+            <PageButtonsComponent currentPage={currentPage} totalPages={totalPages} setPage={setPage} />
         </ContainerSearchTools >
     )
 }
-// TO DO: COMPONENTES BUTTONS, HEADER PARA MINIMAR A PAGE?
-// TO DO: FUNCOES PAGINACAO - JUNTAR
-// TO DO: TESTE DE RENDERIZAÇÃO REACT
 
 export default SearchTool;
 
@@ -148,6 +121,10 @@ const ContainerSearchTools = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
+  h1 {
+    color: #757575 !important;
+    margin: 40px 0;
+  }
 `
 
 const SearchBarDiv = styled.div`
@@ -176,11 +153,4 @@ const Tools = styled.div`
     align-items: flex-start;
     justify-content: center;
     gap: 0 35px;
-`
-const Buttons = styled.div`
-    display: flex;
-`
-
-const PageButton = styled.button`
-    padding: 10px;
 `
