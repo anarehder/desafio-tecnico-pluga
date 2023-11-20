@@ -9,11 +9,10 @@ const ToolModal = (props) => {
     const handleClick = () => {
         props.closeModal(props.tool);
     };
-    console.log(recentTools)
 
     return (
         <ModalContainer>
-            <Modal isOpen={props.tool && true}>
+            <Modal isOpen={!!props.tool}>
                 <ToolInfo>
                     <img src={props.tool.icon} alt={props.tool.name} />
                     <div>
@@ -34,8 +33,6 @@ const ToolModal = (props) => {
                         </LastToolsList>}
                     <ModalButton onClick={handleClick}>Fechar Modal</ModalButton>
                 </LastTools>
-
-
             </Modal>
         </ModalContainer>
     );
