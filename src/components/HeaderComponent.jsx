@@ -5,9 +5,9 @@ export default function HeaderComponent() {
 
     return (
         <Header>
-                <img src={logoPluga} alt={"logo Pluga"} />
-                <h1> As ferramentas que você mais ama, agora juntas. </h1>
-            </Header>
+            <img src={logoPluga} alt={"logo Pluga"} />
+            <h1> As ferramentas que você mais ama, agora juntas. </h1>
+        </Header>
     );
 }
 
