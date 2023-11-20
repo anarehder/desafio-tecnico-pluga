@@ -14,12 +14,22 @@ export const useToolContext = () => {
 export const ToolContextProvider = ({ children }) => {
   const [recentTools, setRecentTools] = useState([]);
 
-  const addRecentTool = (tool) => {
-    // Mantenha apenas as últimas 3 ferramentas
-    const updatedRecentTools = [...recentTools.slice(-2), tool];
-    setRecentTools(updatedRecentTools);
+  const addRecentTool = (newTool) => {
+    const existingIndex = recentTools.findIndex((tool) => tool.app_id === newTool.app_id);
+
+    if (existingIndex !== -1) {
+      const updatedRecentTools = [
+        ...recentTools.slice(0, existingIndex),
+        ...recentTools.slice(existingIndex + 1),
+        newTool,
+      ];
+      setRecentTools(updatedRecentTools);
+    } else {
+      const updatedRecentTools = [...recentTools.slice(-2), newTool];
+      setRecentTools(updatedRecentTools);
+    }
   };
-  console.log(recentTools);
+
   return (
     <ToolContext.Provider value={{ recentTools, addRecentTool }}>
       {children}

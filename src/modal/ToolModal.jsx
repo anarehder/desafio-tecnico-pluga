@@ -13,7 +13,7 @@ const ToolModal = (props) => {
 
     return (
         <ModalContainer>
-            <Modal isOpen={props.tool ? true : false}>
+            <Modal isOpen={props.tool && true }>
                 <ToolInfo>
                     <img src={props.tool.icon} alt={props.tool.name} />
                     <div>
