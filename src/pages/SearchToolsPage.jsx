@@ -114,13 +114,13 @@ function SearchTool() {
 export default SearchTool;
 
 const ContainerSearchTools = styled.div`
-  width: 100%;
+  max-width: 95%;
   padding: 0 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   h1 {
     color: #757575 !important;
     margin: 40px 0;

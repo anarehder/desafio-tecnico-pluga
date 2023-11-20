@@ -24,6 +24,6 @@ export default App
 const AppContainer = styled.main`
   display: flex;
   justify-content: center;
-  width: calc(100vw - 15px);
+  max-width: calc(100vw - 15px);
   padding: 10px;
 `
