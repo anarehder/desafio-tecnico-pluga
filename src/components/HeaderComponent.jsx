@@ -15,7 +15,9 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
+    text-align: center;
     img {
-        width: 20%;
+        width: 175px;
+        margin-right: 15px;
     }
 `

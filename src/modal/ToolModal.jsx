@@ -25,10 +25,10 @@ const ToolModal = (props) => {
                     {recentTools.length === 0 ? <h1> Não foram visualizadas ferramentas anteriormente </h1> :
                         <LastToolsList>
                             {recentTools.map((tool) => (
-                                <li key={tool.name}>
+                                <div key={tool.name}>
                                     <img src={tool.icon} alt={tool.name} />
                                     <h1>{tool.name}</h1>
-                                </li>
+                                </div>
                             ))}
                         </LastToolsList>}
                     <ModalButton onClick={handleClick}>Fechar Modal</ModalButton>
@@ -58,6 +58,7 @@ const ToolInfo = styled.div`
     margin: 100px 50px 20px 50px;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 70px;
     img {
         width: 170px;
@@ -68,9 +69,10 @@ const ToolInfo = styled.div`
     div {
         display: flex;
         flex-direction: column;
-        align-items: ceter;
+        align-items: center;
         justify-content: space-around;
         text-align: center;
+        gap: 20px;
         h1 {
             width: 250px;
             background-color: #EFEFEF;;
@@ -85,6 +87,9 @@ const ToolInfo = styled.div`
             color: white;
         }
     }
+    @media (max-width: 1200px) {
+        flex-direction: column;
+    }
 `
 
 const LastTools = styled.div`
@@ -97,6 +102,16 @@ const LastTools = styled.div`
     h1 {
         color: #757575 !important;
     }
+    @media (max-width: 1200px) {
+        flex-direction: column;
+        h1{
+            width: 200px;
+            text-align: center;
+        }
+        div{
+            gap: 15px
+        }
+    }
 
 `
 const LastToolsList = styled.div`
@@ -104,7 +119,7 @@ const LastToolsList = styled.div`
     align-items: center;
     justify-content: center;
     gap: 70px;
-    li {
+    div {
         text-align: center;
     }
     img {
@@ -119,6 +134,12 @@ const LastToolsList = styled.div`
             background-color: #EFEFEF;
             color: #757575 !important;
             padding: 15px;
+    }
+    @media (max-width: 1200px) {
+        flex-direction: column;
+        div{
+            gap: 15px
+        }
     }
 `
 

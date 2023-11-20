@@ -137,6 +137,9 @@ const SearchBarDiv = styled.div`
     border-radius: 50px;
     border: 1px solid #757575;
     gap: 15px;
+    @media (max-width: 1800px) {
+        width: calc(100% - 30%);
+    }
 `
 
 const SearchBarForm = styled.form`
@@ -153,4 +156,8 @@ const Tools = styled.div`
     align-items: flex-start;
     justify-content: center;
     gap: 0 35px;
+    @media (max-width: 1800px) {
+        padding: 10px 40px;
+        gap: 15px 15px;
+    }
 `
