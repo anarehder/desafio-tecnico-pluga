@@ -5,6 +5,8 @@ import { FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { getPlugaData } from '../services/plugaAPI';
 import ToolComponent from '../components/ToolComponent';
+import ToolModal from '../modal/ToolModal';
+import { useToolContext } from '../contexts/ToolContext';
 
 function SearchTool() {
     const [toolsData, setToolsData] = useState([]);
@@ -15,7 +17,17 @@ function SearchTool() {
     const itemsPerPage = 12;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredTools, setFilteredTools] = useState([]);
-    console.log(searchTerm);
+    const [selectedTool, setSelectedTool] = useState(null);
+    const { addRecentTool } = useToolContext();
+
+    function openModal(tool){
+        setSelectedTool(tool);
+    }
+
+    function closeModal(tool) {
+        addRecentTool(tool);
+        setSelectedTool(null);
+    }
 
     function setPage(page, array) {
         const startIndex = (page - 1) * itemsPerPage;
@@ -43,7 +55,7 @@ function SearchTool() {
     const nextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
-            if (searchTerm.length > 0){
+            if (searchTerm.length > 0) {
                 setPage(currentPage + 1, filteredTools);
             } else {
                 setPage(currentPage + 1, toolsData);
@@ -54,7 +66,7 @@ function SearchTool() {
     const prevPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
-            if (searchTerm.length > 0){
+            if (searchTerm.length > 0) {
                 setPage(currentPage - 1, filteredTools);
             } else {
                 setPage(currentPage - 1, toolsData);
@@ -100,17 +112,20 @@ function SearchTool() {
                 filteredTools.length === 0 && searchTerm.length === 0 ?
                     <Tools>
                         {toolsByPage.map((tool) => (
-                            <ToolComponent key={tool.app_id} tool={tool} />))
+                            <ToolComponent key={tool.app_id} tool={tool} openModal={openModal} />))
                         }
                     </Tools> :
                     filteredTools.length === 0 && searchTerm.length > 0 ?
                         <h1> Sem resultados para esta busca </h1> :
                         <Tools>
                             {toolsByPage.map((tool) => (
-                                <ToolComponent key={tool.app_id} tool={tool} />))
+                                <ToolComponent key={tool.app_id} tool={tool} openModal={openModal} />))
                             }
                         </Tools>
             }
+            {selectedTool && (
+                <ToolModal tool={selectedTool} closeModal={closeModal}/>
+            )}
             <Buttons>
                 <PageButton onClick={prevPage} disabled={currentPage === 1}>
                     PÁGINA ANTERIOR
@@ -122,6 +137,10 @@ function SearchTool() {
         </ContainerSearchTools >
     )
 }
+// TO DO: COMPONENTES BUTTONS, HEADER PARA MINIMAR A PAGE?
+// TO DO: MODAL DE CADA FERRAMENTA - REACT-MODAL
+// TO DO: FUNCOES PAGINACAO - JUNTAR
+// TO DO: TESTE DE RENDERIZAÇÃO REACT
 
 export default SearchTool;
 

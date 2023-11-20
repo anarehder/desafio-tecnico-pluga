@@ -1,22 +1,20 @@
+/* eslint-disable react/prop-types */
 import styled from 'styled-components';
 
-import { useState } from 'react';
-
-export default function ToolComponent(tool) {
-    const [setModalOpen] = useState(false);
-
-    const handleOpenModal = () => {
-        setModalOpen(true);
-    }
+export default function ToolComponent(props) {
+    const handleClick = () => {
+        props.openModal(props.tool);
+    };
 
     return (
-        <a onClick={handleOpenModal}>
+        <a onClick={handleClick}>
             <ToolBlock>
                 <div>
-                    <img src={tool.tool.icon} alt={tool.tool.name} />
+                    <img src={props.tool.icon} alt={props.tool.name} />
                 </div>
-                <h2> {tool.tool.name} </h2>
+                <h2> {props.tool.name} </h2>
             </ToolBlock>
+            
         </a>
     );
 }

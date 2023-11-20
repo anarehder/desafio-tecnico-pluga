@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import SearchTool from "./pages/SearchToolsPage";
 import { ToolContextProvider } from "./contexts/ToolContext";
-
+import Modal from 'react-modal';
+Modal.setAppElement('#root');
 function App() {
 
   return (
