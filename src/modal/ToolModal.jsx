@@ -12,7 +12,7 @@ const ToolModal = (props) => {
 
     return (
         <ModalContainer>
-            <Modal isOpen={!!props.tool}>
+            <Modal isOpen={!!props.tool} onClose={handleClick}>
                 <ToolInfo>
                     <img src={props.tool.icon} alt={props.tool.name} />
                     <div>
@@ -25,7 +25,7 @@ const ToolModal = (props) => {
                     {recentTools.length === 0 ? <h1> Não foram visualizadas ferramentas anteriormente </h1> :
                         <LastToolsList>
                             {recentTools.map((tool) => (
-                                <li key={tool.id_app}>
+                                <li key={tool.name}>
                                     <img src={tool.icon} alt={tool.name} />
                                     <h1>{tool.name}</h1>
                                 </li>
