@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import logoPluga from '../assets/images/pluga.png';
 import loadingGif from '../assets/images/spinner.gif';
 import { FaSearch } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
@@ -7,6 +6,7 @@ import { getPlugaData } from '../services/plugaAPI';
 import ToolComponent from '../components/ToolComponent';
 import ToolModal from '../modal/ToolModal';
 import { useToolContext } from '../contexts/ToolContext';
+import HeaderComponent from '../components/HeaderComponent';
 
 function SearchTool() {
     const [toolsData, setToolsData] = useState([]);
@@ -89,10 +89,7 @@ function SearchTool() {
 
     return (
         <ContainerSearchTools>
-            <Header>
-                <img src={logoPluga} alt={"logo Pluga"} />
-                <h1> As ferramentas que você mais ama, agora juntas. </h1>
-            </Header>
+            <HeaderComponent />
             <SearchBarDiv style={{ color: 'gray' }}>
                 <FaSearch size={24} />
                 <SearchBarForm>
@@ -151,15 +148,6 @@ const ContainerSearchTools = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
-`
-
-const Header = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    img {
-        width: 20%;
-    }
 `
 
 const SearchBarDiv = styled.div`
